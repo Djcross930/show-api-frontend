@@ -31,6 +31,11 @@ export default {
         this.newShow.name = ""
         this.newShow.episodes = ""
       })
+    },
+    updateShow: function () {
+      axios.patch(`/shows/${this.currentShow.id}`, this.currentShow).then(response => {
+        console.log(response.data)
+      })
     }
   },
 };
@@ -53,6 +58,10 @@ export default {
         <p> {{ currentShow.name }}</p>
         <p> {{ currentShow.episodes }}</p>
         <hr />
+        <hr />
+        <p>Name:<input type="text" v-model="currentShow.name"></p>
+        <p>Episodes<input type="text" v-model="currentShow.episodes"></p>
+        <button v-on:click="updateShow">Update Show</button>
         <button>Close</button>
       </form>
     </dialog>
