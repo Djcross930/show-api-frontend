@@ -36,6 +36,13 @@ export default {
       axios.patch(`/shows/${this.currentShow.id}`, this.currentShow).then(response => {
         console.log(response.data)
       })
+    },
+    destroyShow: function (theShow) {
+      axios.delete("/shows/" + theShow.id).then(response => {
+        console.log(response.data)
+        var index = this.shows.indexOf(theShow)
+        this.shows.splice(index, 1)
+      })
     }
   },
 };
@@ -62,6 +69,7 @@ export default {
         <p>Name:<input type="text" v-model="currentShow.name"></p>
         <p>Episodes<input type="text" v-model="currentShow.episodes"></p>
         <button v-on:click="updateShow">Update Show</button>
+        <button v-on:click="destroyShow(currentShow)">Delete Show</button>
         <button>Close</button>
       </form>
     </dialog>
