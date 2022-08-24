@@ -5,7 +5,8 @@ export default {
     return {
       message: "Welcome to Vue.js!",
       shows: [],
-      currentShow: {}
+      currentShow: {},
+      newShow: {}
     };
   },
   created: function () {
@@ -23,6 +24,13 @@ export default {
       console.log(theShow)
       this.currentShow = theShow
       document.querySelector('#show-details').showModal();
+    },
+    createShow: function () {
+      axios.post("/shows", this.newShow).then(response => {
+        this.shows.push(response.data)
+        this.newShow.name = ""
+        this.newShow.episodes = ""
+      })
     }
   },
 };
@@ -31,6 +39,9 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <p>Name:<input type="text" v-model="newShow.name"> </p>
+    <p>Episodes:<input type="text" v-model="newShow.episodes"></p>
+    <button v-on:click="createShow()">Create Show</button>
     <div v-for="show in shows">
       <p> {{ show.name }} </p>
       <p>{{ show.episodes }}</p>
@@ -41,6 +52,7 @@ export default {
       <form method="dialog">
         <p> {{ currentShow.name }}</p>
         <p> {{ currentShow.episodes }}</p>
+        <hr />
         <button>Close</button>
       </form>
     </dialog>
