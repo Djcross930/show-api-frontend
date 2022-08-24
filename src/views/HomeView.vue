@@ -4,7 +4,8 @@ export default {
   data: function () {
     return {
       message: "Welcome to Vue.js!",
-      shows: []
+      shows: [],
+      currentShow: {}
     };
   },
   created: function () {
@@ -17,6 +18,11 @@ export default {
         console.log(response.data)
         this.shows = response.data
       })
+    },
+    showShow: function (theShow) {
+      console.log(theShow)
+      this.currentShow = theShow
+      document.querySelector('#show-details').showModal();
     }
   },
 };
@@ -28,7 +34,16 @@ export default {
     <div v-for="show in shows">
       <p> {{ show.name }} </p>
       <p>{{ show.episodes }}</p>
+      <button v-on:click="showShow(show)">More info</button>
     </div>
+
+    <dialog id="show-details">
+      <form method="dialog">
+        <p> {{ currentShow.name }}</p>
+        <p> {{ currentShow.episodes }}</p>
+        <button>Close</button>
+      </form>
+    </dialog>
   </div>
 </template>
 
